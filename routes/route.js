@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
+const userController_1 = require("../controller/userController");
+const bookController_1 = require("../controller/bookController");
+const reviewController_1 = require("../controller/reviewController");
+const auth_1 = require("../middleware/auth");
+router.post('/register', userController_1.register);
+router.post('/login', userController_1.login);
+router.post('/createBook', auth_1.authentication, bookController_1.createBook);
+router.get('/findBookById/:bookId', auth_1.authentication, bookController_1.findBookById);
+router.get('/findAllBook', auth_1.authentication, bookController_1.findAllBook);
+router.get('/filterBook', auth_1.authentication, bookController_1.filterBook);
+router.put('/updateBook/:bookId', auth_1.authentication, auth_1.bookAuthorization, bookController_1.updateBook);
+router.delete('/deleteBook/:bookId', auth_1.authentication, auth_1.bookAuthorization, bookController_1.deleteBook);
+router.delete('/deleteAllBook', auth_1.authentication, bookController_1.deleteAllBook);
+router.post('/review', auth_1.authentication, reviewController_1.review);
+router.put('/updateReview/:reviewId', auth_1.authentication, auth_1.reviewAuthorization, reviewController_1.updateReview);
+router.delete('/deleteReview/:reviewId', auth_1.authentication, auth_1.reviewAuthorization, reviewController_1.deleteReview);
+exports.default = router;
