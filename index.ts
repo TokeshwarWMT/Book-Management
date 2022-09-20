@@ -1,8 +1,8 @@
 import 'dotenv/config'
 import express from 'express';
 import mongoose from 'mongoose';
-import routes from './routes/route'
-import { Request, Response, NextFunction } from 'express';
+import routes from './routes/route';
+
 const app = express();
 app.use(express.json());
 app.use('/', routes);
@@ -15,11 +15,6 @@ try {
 } catch (error) {
     console.log(error)
 };
-
-app.use((err:any, req: Request, res: Response, next: NextFunction) => {
-    console.error(err.message)
-    res.status(500).send('Something broke!')
-  })
 
 app.listen(process.env.PORT, () => {
     console.log(`Express App is running on ${process.env.PORT}`)

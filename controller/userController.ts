@@ -2,10 +2,18 @@ import User from '../model/userModel';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { validationResult } from 'express-validator';
+
 
 export async function register(req: Request, res: Response) {
 
     try {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
         let data = req.body;
         const { fName, lName, mobile, email, password } = data;

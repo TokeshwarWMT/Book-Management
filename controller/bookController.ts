@@ -1,5 +1,6 @@
 import Book from '../model/bookModel';
 import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 
 export async function createBook(req: Request, res: Response) {
     try {
@@ -12,6 +13,13 @@ export async function createBook(req: Request, res: Response) {
 
 export async function findBookById(req: Request, res: Response) {
     try {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const book = await Book.findById(req.params.bookId);
         if (!book) {
             return res.status(400).send({ status: false, message: 'Error.. Book not found..' })

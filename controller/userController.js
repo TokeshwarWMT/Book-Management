@@ -16,9 +16,14 @@ exports.login = exports.register = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const express_validator_1 = require("express-validator");
 function register(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
             let data = req.body;
             const { fName, lName, mobile, email, password } = data;
             const salt = yield bcrypt_1.default.genSalt(10);

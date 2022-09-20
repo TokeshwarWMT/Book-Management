@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllBook = exports.deleteBook = exports.updateBook = exports.filterBook = exports.findAllBook = exports.findBookById = exports.createBook = void 0;
 const bookModel_1 = __importDefault(require("../model/bookModel"));
+const express_validator_1 = require("express-validator");
 function createBook(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -30,6 +31,10 @@ exports.createBook = createBook;
 function findBookById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
             const book = yield bookModel_1.default.findById(req.params.bookId);
             if (!book) {
                 return res.status(400).send({ status: false, message: 'Error.. Book not found..' });

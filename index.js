@@ -19,10 +19,6 @@ catch (error) {
     console.log(error);
 }
 ;
-app.use((err, req, res, next) => {
-    console.error(err.message);
-    res.status(500).send('Something broke!');
-});
 app.listen(process.env.PORT, () => {
     console.log(`Express App is running on ${process.env.PORT}`);
 });
