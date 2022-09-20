@@ -16,6 +16,7 @@ exports.reviewAuthorization = exports.bookAuthorization = exports.authentication
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bookModel_1 = __importDefault(require("../model/bookModel"));
 const reviewModel_1 = __importDefault(require("../model/reviewModel"));
+const express_validator_1 = require("express-validator");
 function authentication(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -42,6 +43,11 @@ exports.authentication = authentication;
 function bookAuthorization(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            ;
             let token = req.headers['x-api-key'];
             let key = process.env.SECRET_KEY;
             let decodedToken = jsonwebtoken_1.default.verify(token, key);
@@ -68,6 +74,11 @@ exports.bookAuthorization = bookAuthorization;
 function reviewAuthorization(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            ;
             let token = req.headers['x-api-key'];
             let key = process.env.SECRET_KEY;
             let decodedToken = jsonwebtoken_1.default.verify(token, key);

@@ -25,15 +25,15 @@ export function userValidation() {
 };
 
 export function findBookValidation() {
-    return [check('id').isMongoId().withMessage('Error...Please input vailid objectId!!')]
+    return [check('bookId').not().isEmpty().withMessage('Error..bookdId is required!!').isMongoId().withMessage('Error...Please input vailid objectId!!')]
 };
 
 export function updateBookValidation() {
-    return [check('id').isMongoId().withMessage('Error..Please input vailid objectId!!')]
+    return [check('bookId').isMongoId().withMessage('Error..Please input vailid objectId!!')]
 };
 
 export function deleteBookValidation() {
-    return [check('id').isMongoId().withMessage('Error..Please input vailid objectId!!')]
+    return [check('bookId').isMongoId().withMessage('Error..Please input vailid objectId!!')]
 };
 
 export function reviewValidation() {
@@ -48,5 +48,5 @@ export function updateReviewValidation() {
 };
 
 export function deleteReviewValidation() {
-    return [check('reviewId').not().isEmpty().withMessage('Error..reviewId is required..!!')]
+    return [check('reviewId').isMongoId().withMessage('Error..Please input vailid reviewId!!')]
 };

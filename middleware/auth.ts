@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import Book from '../model/bookModel';
 import Review from '../model/reviewModel';
 import { idecodedToken, iBook, iDecodedToken, iReview } from '../interfaces/interface';
+import { validationResult } from 'express-validator';
+
 
 export async function authentication(req: Request, res: Response, next: NextFunction) {
     try {
@@ -24,6 +26,11 @@ export async function authentication(req: Request, res: Response, next: NextFunc
 export async function bookAuthorization(req: Request, res: Response, next: NextFunction) {
 
     try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         let token: any = req.headers['x-api-key'];
         let key: string = process.env.SECRET_KEY as string;
@@ -52,6 +59,12 @@ export async function reviewAuthorization(req: Request, res: Response, next: Nex
 
     try {
 
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
+
         let token: any = req.headers['x-api-key'];
         let key: string = process.env.SECRET_KEY as string;
         let decodedToken = jwt.verify(token, key) as idecodedToken;
@@ -60,7 +73,7 @@ export async function reviewAuthorization(req: Request, res: Response, next: Nex
         let loggedIn = decodedToken.id;
 
         let value = await Review.findById(loggingIn) as iReview;
-        
+
         if (!value) {
             return res.status(200).send({ status: false, message: 'Error..Review not found' })
         };

@@ -81,6 +81,10 @@ exports.filterBook = filterBook;
 function updateBook(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
             const book = yield bookModel_1.default.findByIdAndUpdate(req.params.bookId, { $set: req.body }, { new: true });
             return res.status(201).send({ status: true, message: 'updated successfully..', bookDetails: book });
         }
@@ -94,6 +98,10 @@ exports.updateBook = updateBook;
 function deleteBook(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const errors = (0, express_validator_1.validationResult)(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
             const book = yield bookModel_1.default.findByIdAndRemove(req.params.bookId);
             if (!book) {
                 return res.status(400).send({ status: false, message: 'Error..Book is already deleted..' });

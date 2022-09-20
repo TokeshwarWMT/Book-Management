@@ -30,17 +30,17 @@ function userValidation() {
 exports.userValidation = userValidation;
 ;
 function findBookValidation() {
-    return [(0, express_validator_1.check)('id').isMongoId().withMessage('Error...Please input vailid objectId!!')];
+    return [(0, express_validator_1.check)('bookId').not().isEmpty().withMessage('Error..bookdId is required!!').isMongoId().withMessage('Error...Please input vailid objectId!!')];
 }
 exports.findBookValidation = findBookValidation;
 ;
 function updateBookValidation() {
-    return [(0, express_validator_1.check)('id').isMongoId().withMessage('Error..Please input vailid objectId!!')];
+    return [(0, express_validator_1.check)('bookId').isMongoId().withMessage('Error..Please input vailid objectId!!')];
 }
 exports.updateBookValidation = updateBookValidation;
 ;
 function deleteBookValidation() {
-    return [(0, express_validator_1.check)('id').isMongoId().withMessage('Error..Please input vailid objectId!!')];
+    return [(0, express_validator_1.check)('bookId').isMongoId().withMessage('Error..Please input vailid objectId!!')];
 }
 exports.deleteBookValidation = deleteBookValidation;
 ;
@@ -58,7 +58,7 @@ function updateReviewValidation() {
 exports.updateReviewValidation = updateReviewValidation;
 ;
 function deleteReviewValidation() {
-    return [(0, express_validator_1.check)('reviewId').not().isEmpty().withMessage('Error..reviewId is required..!!')];
+    return [(0, express_validator_1.check)('reviewId').isMongoId().withMessage('Error..Please input vailid reviewId!!')];
 }
 exports.deleteReviewValidation = deleteReviewValidation;
 ;

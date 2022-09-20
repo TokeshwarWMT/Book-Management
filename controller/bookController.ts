@@ -53,6 +53,13 @@ export async function filterBook(req: Request, res: Response) {
 
 export async function updateBook(req: Request, res: Response) {
     try {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const book = await Book.findByIdAndUpdate(req.params.bookId, { $set: req.body }, { new: true });
         return res.status(201).send({ status: true, message: 'updated successfully..', bookDetails: book })
 
@@ -63,6 +70,13 @@ export async function updateBook(req: Request, res: Response) {
 
 export async function deleteBook(req: Request, res: Response) {
     try {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const book = await Book.findByIdAndRemove(req.params.bookId);
         if (!book) {
             return res.status(400).send({ status: false, message: 'Error..Book is already deleted..' })
