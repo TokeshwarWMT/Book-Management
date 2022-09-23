@@ -12,8 +12,9 @@ app.use(express_1.default.json());
 app.use('/', route_1.default);
 let uri = process.env.MONGODB_URL;
 try {
-    mongoose_1.default.connect(uri);
-    console.log('MongoDB connection successfull..');
+    mongoose_1.default.connect(uri)
+        .then(() => console.log('MongoDB connection successful..'))
+        .catch(error => console.log(error));
 }
 catch (error) {
     console.log(error);

@@ -12,4 +12,4 @@ export interface idecodedToken {
 
 export interface iReview {
     userId: string
-}
+};

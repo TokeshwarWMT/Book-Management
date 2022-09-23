@@ -10,8 +10,9 @@ app.use('/', routes);
 let uri: string = process.env.MONGODB_URL as string;
 
 try {
-    mongoose.connect(uri);
-    console.log('MongoDB connection successfull..')
+    mongoose.connect(uri)
+        .then(() => console.log('MongoDB connection successful..'))
+        .catch(error => console.log(error))
 } catch (error) {
     console.log(error)
 };
